@@ -4,7 +4,7 @@ using UIKit;
 
 namespace CurrencyValueApp
 {
-    public partial class ViewController : UIViewController
+    /*public partial class ViewController : UIViewController
     {
         public ViewController(IntPtr handle) : base(handle)
         {
@@ -21,5 +21,5 @@ namespace CurrencyValueApp
             base.DidReceiveMemoryWarning();
             // Release any cached data, images, etc that aren't in use.
         }
-    }
+    }*/
 }

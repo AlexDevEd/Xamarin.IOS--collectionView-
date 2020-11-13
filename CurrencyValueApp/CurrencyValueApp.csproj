@@ -26,6 +26,7 @@
         <MtouchArch>x86_64</MtouchArch>
         <MtouchLink>None</MtouchLink>
         <MtouchDebug>true</MtouchDebug>
+        <CodesignKey>iPhone Developer</CodesignKey>
     </PropertyGroup>
     <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhoneSimulator' ">
         <DebugType>none</DebugType>
@@ -133,6 +134,29 @@
         <Compile Include="ViewController.designer.cs">
             <DependentUpon>ViewController.cs</DependentUpon>
         </Compile>
+        <Compile Include="CollecrionViewController.cs" />
+        <Compile Include="CollecrionViewController.designer.cs">
+          <DependentUpon>CollecrionViewController.cs</DependentUpon>
+        </Compile>
+        <Compile Include="CollectionSource.cs" />
+        <Compile Include="CurrencyCollectionView.cs" />
+        <Compile Include="CurrencyCollectionView.designer.cs">
+          <DependentUpon>CurrencyCollectionView.cs</DependentUpon>
+        </Compile>
+        <Compile Include="CurrencyCollectionCell.cs" />
+        <Compile Include="CurrencyCollectionCell.designer.cs">
+          <DependentUpon>CurrencyCollectionCell.cs</DependentUpon>
+        </Compile>
+        <Compile Include="CurrencyModel.cs" />
+        <Compile Include="ChangeValueController.cs" />
+        <Compile Include="ChangeValueController.designer.cs">
+          <DependentUpon>ChangeValueController.cs</DependentUpon>
+        </Compile>
+        <Compile Include="ChangeValueView.cs" />
+        <Compile Include="ChangeValueView.designer.cs">
+          <DependentUpon>ChangeValueView.cs</DependentUpon>
+        </Compile>
+        <Compile Include="CollectionDelegate.cs" />
     </ItemGroup>
     <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
 </Project>
