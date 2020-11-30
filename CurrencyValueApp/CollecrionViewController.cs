@@ -2,6 +2,7 @@ using System;
 using Foundation;
 using UIKit;
 using System.Collections.Generic;
+using CoreGraphics;
 
 namespace CurrencyValueApp
 {
@@ -34,6 +35,12 @@ namespace CurrencyValueApp
             {
                 var controller = segue.DestinationViewController as ChangeValueController;
                 var cell = sender as CurrencyCollectionCell;
+               // TransitionAnimator transitionAnimator = new TransitionAnimator(controller, this);
+                //controller.TransitioningDelegate = (IUIViewControllerTransitioningDelegate)transitionAnimator;
+
+               // controller = (ChangeValueController)Storyboard.InstantiateViewController("ChangeController");
+                // controller.ModalTransitionStyle = UIModalTransitionStyle.PartialCurl;
+               // PresentViewController(controller, true, null);
 
                 if (controller == null || cell == null)
                 {
@@ -43,11 +50,12 @@ namespace CurrencyValueApp
                 controller.CurrencyNameValue = cell.CurrencyModel.TitleLeft;
                 controller.SellingPriceValue = cell.CurrencyModel.TitleSell;
                 controller.PurchasePriceValue = cell.CurrencyModel.TitleBuy;
+             
+               // PresentViewController(controller, true, null);
+
             }
-            if (segue.Identifier == "toSecondView")
-            {
-                ChangeValueController callMVController = segue.DestinationViewController as ChangeValueController;
-            }
-        }
+        
+    }
+       
     }
 }

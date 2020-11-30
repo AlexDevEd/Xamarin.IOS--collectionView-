@@ -157,6 +157,7 @@
           <DependentUpon>ChangeValueView.cs</DependentUpon>
         </Compile>
         <Compile Include="CollectionDelegate.cs" />
+        <Compile Include="TransitionAnimator.cs" />
     </ItemGroup>
     <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
 </Project>

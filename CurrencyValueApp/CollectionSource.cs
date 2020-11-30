@@ -80,8 +80,9 @@ namespace CurrencyValueApp
             var currencyRate = data[indexPath.Row];
 
             cell.UpdateCell(currencyRate);
-
            
+
+
             //cell.UpdateRow(_Items, indexPath);
 
             return cell;

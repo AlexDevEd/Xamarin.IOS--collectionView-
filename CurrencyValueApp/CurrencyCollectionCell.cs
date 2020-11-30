@@ -17,9 +17,7 @@ namespace CurrencyValueApp
         internal void UpdateCell(CurrencyModel currencyModel)
         {
             CurrencyModel = currencyModel;
-
-            TextLabel.Text = currencyModel.TitleLeft;
-            
+            TextLabel.Text = currencyModel.TitleLeft;           
             Sell.Text = currencyModel.TitleSell.ToString();
             Buy.Text = currencyModel.TitleBuy.ToString();
         }

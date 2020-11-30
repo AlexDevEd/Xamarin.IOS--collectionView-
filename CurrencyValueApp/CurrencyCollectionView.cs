@@ -18,7 +18,7 @@ namespace CurrencyValueApp
 
             // Initialize
             DataSource = new CollectionSource(this);           
-            Delegate = new CollectionDelegate(this);
+            //Delegate = new CollectionDelegate(this);
 
         }
         }
