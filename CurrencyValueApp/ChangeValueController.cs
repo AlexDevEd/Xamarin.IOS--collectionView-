@@ -27,8 +27,9 @@ namespace CurrencyValueApp
             NameValue.Text = CurrencyNameValue;
             SellPrice.Text = SellingPriceValue.ToString();
             BuyPrice.Text = PurchasePriceValue.ToString();
-            CreateLabelAnimation(BuyPrice);
-            CreateLabelAnimation(SellPrice);
+            ShakeIt(BuyPrice);
+            CustomAnimations.Pop(SellPrice,3,2,3);
+            CreateLabelAnimation(NameValue);
 
             btnBuy.TouchUpInside -= BuyTouch;
             btnBuy.TouchUpInside += BuyTouch;
@@ -40,7 +41,10 @@ namespace CurrencyValueApp
         void BuyTouch(object sender, EventArgs args)
         {
             float userInputFloat = 0;
-            ShakeIt(btnBuy);
+            //ShakeIt(btnBuy);
+
+            CustomAnimations.RotateToAngle(btnBuy,30,3,CustomAnimations.UIViewAnimationRotationDirection.Right,1,true);
+
             try
             {
                 userInputFloat = Convert.ToSingle(UserValue.Text);
@@ -58,7 +62,7 @@ namespace CurrencyValueApp
         void SellTouch(object sender, EventArgs args)
         {
             float userInputFloat = 0;
-
+            CustomAnimations.FlipWithDuration(btnSell,5.5,CustomAnimations.UIViewAnimationFlipDirection.Bottom,1,false);
             try
             {
                 userInputFloat = Convert.ToSingle(UserValue.Text);
@@ -117,7 +121,7 @@ namespace CurrencyValueApp
 
 
         }
-        public static void ShakeIt(UIButton label, float Duration = 0.05f, int RepeatCount = 60, float MovementDistance = 2f, string AnimationKey = "position")
+        public static void ShakeIt(UIView label, float Duration = 0.05f, int RepeatCount = 60, float MovementDistance = 2f, string AnimationKey = "position")
         {
             CABasicAnimation animation = new CABasicAnimation();
             animation.Duration = Duration;
@@ -139,38 +143,68 @@ namespace CurrencyValueApp
 
         public void CreateResultPositionAndSizeAnimation(UITextField resultValue,string animationPositionKey = "position", string animationSizeKey1 = "bounds.size")
         {
-            CABasicAnimation theAnimation = new CABasicAnimation();
-            //CABasicAnimation[] theAnimation = new CABasicAnimation[2];
+            //CABasicAnimation theAnimation = new CABasicAnimation();
+            CABasicAnimation[] theAnimation = new CABasicAnimation[2];
             
              var position = new CABasicAnimation();
+            position.KeyPath = animationPositionKey;
              position.SetFrom(NSValue.FromCGPoint(new CGPoint(182, 342)));
              position.SetTo(NSValue.FromCGPoint(new CGPoint(182, 400)));
-             position.Duration = 5.0;
-             //position.BeginTime = 0.0;
+             position.Duration = 1.0;
+             position.BeginTime = 0.1;
              position.AutoReverses = true;
             resultValue.TextColor = UIColor.White;
             resultValue.TextAlignment = UITextAlignment.Center;       
-            //theAnimation.Append(position);
-            resultValue.Layer.AddAnimation(position, animationPositionKey);
+            theAnimation.Append(position);
+            //resultValue.Layer.AddAnimation(position, animationPositionKey);
 
             CABasicAnimation heightAnimation = new CABasicAnimation();
+            heightAnimation.KeyPath = animationSizeKey1;
             heightAnimation.AutoReverses = true;          
             heightAnimation.SetFrom(NSValue.FromCGSize(new CGSize(97, 30)));
             heightAnimation.SetTo(NSValue.FromCGSize(new CGSize(97, 80)));
-            heightAnimation.Duration = 5.0;
+            heightAnimation.Duration = 10.0;
             resultValue.TextColor = UIColor.Red;
             resultValue.TextAlignment = UITextAlignment.Center;
-            //heightAnimation.BeginTime = 5.0;
-            //theAnimation.Append(heightAnimation);
-            resultValue.Layer.AddAnimation(heightAnimation, animationSizeKey1);
+            heightAnimation.BeginTime = 5.0;
+            theAnimation.Append(heightAnimation);
+            //resultValue.Layer.AddAnimation(heightAnimation, animationSizeKey1);
 
-            /*  CAAnimationGroup group = new CAAnimationGroup();
+              CAAnimationGroup group = new CAAnimationGroup();
               group.Duration = 10.0;
               group.Animations = theAnimation;
-              resultValue.Layer.AddAnimation(group, null); */
+              resultValue.Layer.AddAnimation(group, null); 
         }
         // _animationButton.frame.size.height
-       
-     
+        public override CAAnimation AnimationForSeries(TKChart chart, TKChartSeries series, TKChartSeriesRenderState state, CGRect rect)
+        {
+            double duration = 0;
+            List<CAAnimation> animations = new List<CAAnimation>();
+            for (int i = 0; i < (int)state.Points.Count; i++)
+            {
+                string pointKeyPath = state.AnimationKeyPathForPointAtIndex((uint)i);
+
+                string keyPath = string.Format("{0}.distanceFromCenter", pointKeyPath);
+                CAKeyFrameAnimation a = CAKeyFrameAnimation.GetFromKeyPath(keyPath);
+                a.Values = new NSNumber[] { new NSNumber(50), new NSNumber(50), new NSNumber(0) };
+                a.KeyTimes = new NSNumber[] { new NSNumber(0), new NSNumber(i / (i + 1.0)), new NSNumber(1) };
+                a.Duration = 0.3 * (i + 1.1);
+                animations.Add(a);
+
+                keyPath = string.Format("{0}.opacity", pointKeyPath);
+                a = CAKeyFrameAnimation.GetFromKeyPath(keyPath);
+                a.Values = new NSNumber[] { new NSNumber(0), new NSNumber(0), new NSNumber(1) };
+                a.KeyTimes = new NSNumber[] { new NSNumber(0), new NSNumber(i / (i + 1.0)), new NSNumber(1) };
+                a.Duration = 0.3 * (i + 1.1);
+                animations.Add(a);
+
+                duration = a.Duration;
+            }
+            CAAnimationGroup g = new CAAnimationGroup();
+            g.Duration = duration;
+            g.Animations = animations.ToArray();
+            return g;
+        }
+
     }
 }
